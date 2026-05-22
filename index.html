@@ -1,29 +1,75 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Test</title>
-  <style>
-    body {background: #0f0f1a; color: white; font-family: sans-serif; text-align: center; padding: 50px;}
-    button {padding: 15px 30px; background: #667eea; border: none; color: white; border-radius: 10px; cursor: pointer; margin: 10px;}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Whirl Hub - Music & University Helper</title>
+<style>
+    * {margin: 0; padding: 0; box-sizing: border-box;}
+  body {font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #0f0f1a; color: #fff;}
+
+  header {background: #161628; padding: 20px; border-bottom: 1px solid rgba(255,255,255,0.1); position: sticky; top: 0;}
+  .header-content {max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;}
+  .logo {font-size: 1.8em; font-weight: bold; background: linear-gradient(90deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent;}
+
+  nav {display: flex; gap: 10px;}
+  .tab-btn {padding: 10px 25px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 25px; color: #fff; cursor: pointer; border: none; font-size: 1em;}
+  .tab-btn.active,.tab-btn:hover {background: #667eea;}
+
+  .container {max-width: 1200px; margin: 0 auto; padding: 40px 20px;}
+  .tab-content {display: none;}
+  .tab-content.active {display: block;}
+
+  /* Music Tab */
+  .upload-box {background: rgba(255,255,255,0.05); padding: 40px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.1); text-align: center; max-width: 600px; margin: 40px auto;}
+  input[type="file"] {display: none;}
+  .upload-label {display: inline-block; padding: 15px 45px; background: linear-gradient(90deg, #667eea, #764ba2); color: #fff; border-radius: 50px; font-weight: bold; cursor: pointer;}
+  audio {width: 100%; margin-top: 25px; display: none;}
+
+  /* University Tab */
+  #searchInput {width: 100%; padding: 15px 20px; font-size: 1.1em; border-radius: 12px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); color: #fff; margin-bottom: 30px;}
+  .filters {display: flex; gap: 10px; margin-bottom: 30px; flex-wrap: wrap;}
+  .filter-btn {padding: 10px 20px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 25px; color: #fff; cursor: pointer;}
+  .filter-btn.active,.filter-btn:hover {background: #667eea;}
+
+  .grid {display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px;}
+  .card {background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 15px; padding: 25px;}
+  .card h3 {color: #667eea; margin-bottom: 10px;}
+  .card .country {background: rgba(102,126,234,0.2); padding: 4px 12px; border-radius: 15px; font-size: 0.85em; display: inline-block; margin-bottom: 12px;}
+  .card .deadline {color: #ff9a9e; font-weight: 600; margin-bottom: 8px;}
+  .btn {display: inline-block; padding: 12px 20px; background: linear-gradient(90deg, #667eea, #764ba2); color: #fff; text-decoration: none; border-radius: 8px; font-weight: 600; margin-top: 15px;}
+
+  h2 {font-size: 2.5em; margin-bottom: 20px; color: #667eea; text-align: center;}
+  .section-desc {text-align: center; opacity: 0.8; margin-bottom: 30px;}
+  footer {text-align: center; padding: 40px 20px; border-top: 1px solid rgba(255,255,255,0.1); opacity: 0.6; margin-top: 60px;}
+</style>
 </head>
 <body>
-  <h1>Whirl Hub Test</h1>
-  <p>If you see this, GitHub Pages is working.</p>
 
-  <button onclick="alert('JS is working!')">Test JS</button>
+<header>
+  <div class="header-content">
+    <div class="logo">Whirl Hub</div>
+    <nav>
+      <button class="tab-btn active" onclick="switchTab('music', event)">Music</button>
+      <button class="tab-btn" onclick="switchTab('university', event)">University Helper</button>
+    </nav>
+  </div>
+</header>
 
-  <input type="file" id="file">
-  <audio id="player" controls style="display:block; margin:20px auto;"></audio>
+<div class="container">
 
-  <script>
-    document.getElementById('file').onchange = function(e) {
-      const file = e.target.files[0];
-      if(file) {
-        document.getElementById('player').src = URL.createObjectURL(file);
-        document.getElementById('player').style.display = 'block';
-      }
-    }
-  </script>
-</body>
-                                                     </html>
+  <div id="music" class="tab-content active">
+    <h2>Music Player</h2>
+    <p class="section-desc">Upload an MP3 and play it instantly. Files never leave your browser.</p>
+    <div class="upload-box">
+      <label for="audioUpload" class="upload-label">Choose MP3 File</label>
+      <input type="file" id="audioUpload" accept=".mp3,audio/*">
+      <audio id="audioPlayer" controls></audio>
+    </div>
+  </div>
+
+  <div id="university" class="tab-content">
+    <h2>University Application Helper</h2>
+    <p class="section-desc">Find direct links to apply to universities worldwide.</p>
+
+    <input type="text" id="searchInput" placeholder="
