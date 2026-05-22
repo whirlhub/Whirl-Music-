@@ -3,130 +3,64 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Whirl Music</title>
+<title>Whirl Hub - Music & University Helper</title>
+<meta name="description" content="Upload and play music, plus find university application links in one place.">
 <style>
     * {margin: 0; padding: 0; box-sizing: border-box;}
-  html {scroll-behavior: smooth;}
   body {font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #0f0f1a; color: #fff; line-height: 1.6;}
-
-  header {position: sticky; top: 0; background: rgba(15, 15, 26, 0.95); backdrop-filter: blur(10px); padding: 20px 50px; border-bottom: 1px solid rgba(255,255,255,0.1); z-index: 100;}
-  nav {display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto;}
- .logo {font-size: 1.8em; font-weight: bold; background: linear-gradient(90deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;}
-  nav ul {display: flex; list-style: none; gap: 35px;}
-  nav a {color: #fff; text-decoration: none; font-weight: 500; transition: color 0.3s;}
-  nav a:hover {color: #667eea;}
-
- .hero {min-height: 80vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 80px 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);}
- .hero h1 {font-size: 4em; margin-bottom: 20px; background: linear-gradient(90deg, #ff9a9e, #fad0c4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;}
- .hero p {font-size: 1.3em; max-width: 700px; opacity: 0.95; margin-bottom: 35px;}
- .btn {display: inline-block; padding: 15px 45px; background: #fff; color: #667eea; text-decoration: none; border-radius: 50px; font-weight: bold; transition: transform 0.3s, box-shadow 0.3s; border: none; cursor: pointer;}
- .btn:hover {transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,0.3);}
-
-  section {padding: 80px 20px; max-width: 1200px; margin: 0 auto;}
-  section h2 {font-size: 2.5em; margin-bottom: 20px; color: #667eea; text-align: center;}
-  section p {font-size: 1.1em; opacity: 0.9; max-width: 800px; margin: 0 auto 20px; text-align: center;}
-
- .features {display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-top: 50px;}
- .card {background: rgba(255, 255, 255, 0.05); padding: 35px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.1); transition: transform 0.3s, background 0.3s;}
- .card:hover {transform: translateY(-5px); background: rgba(255, 255, 255, 0.08);}
- .card h3 {color: #ff9a9e; margin-bottom: 15px; font-size: 1.4em;}
-
-  /* Upload section */
- .upload-box {background: rgba(255, 255, 255, 0.05); padding: 40px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.1); text-align: center; max-width: 600px; margin: 40px auto;}
+  
+  header {background: #161628; padding: 20px; border-bottom: 1px solid rgba(255,255,255,0.1); position: sticky; top: 0; z-index: 100;}
+  .header-content {max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;}
+  .logo {font-size: 1.8em; font-weight: bold; background: linear-gradient(90deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;}
+  
+  nav {display: flex; gap: 10px;}
+  .tab-btn {padding: 10px 25px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 25px; color: #fff; cursor: pointer; transition: all 0.3s; border: none; font-size: 1em;}
+  .tab-btn.active, .tab-btn:hover {background: #667eea;}
+  
+  .container {max-width: 1200px; margin: 0 auto; padding: 40px 20px;}
+  .tab-content {display: none;}
+  .tab-content.active {display: block;}
+  
+  /* Music Tab Styles */
+  .upload-box {background: rgba(255,255,255,0.05); padding: 40px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.1); text-align: center; max-width: 600px; margin: 40px auto;}
   input[type="file"] {display: none;}
- .upload-label {display: inline-block; padding: 15px 45px; background: linear-gradient(90deg, #667eea, #764ba2); color: #fff; border-radius: 50px; font-weight: bold; cursor: pointer; transition: transform 0.3s;}
- .upload-label:hover {transform: translateY(-3px);}
+  .upload-label {display: inline-block; padding: 15px 45px; background: linear-gradient(90deg, #667eea, #764ba2); color: #fff; border-radius: 50px; font-weight: bold; cursor: pointer; transition: transform 0.3s;}
+  .upload-label:hover {transform: translateY(-3px);}
   audio {width: 100%; margin-top: 25px; display: none;}
-
-  footer {text-align: center; padding: 40px 20px; border-top: 1px solid rgba(255,255,255,0.1); opacity: 0.7; margin-top: 60px;}
-
+  
+  /* University Tab Styles */
+  .search-box {margin-bottom: 30px;}
+  #searchInput {width: 100%; padding: 15px 20px; font-size: 1.1em; border-radius: 12px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); color: #fff; outline: none;}
+  #searchInput:focus {border-color: #667eea; background: rgba(255,255,255,0.08);}
+  #searchInput::placeholder {color: rgba(255,255,255,0.5);}
+  
+  .filters {display: flex; gap: 10px; margin-bottom: 30px; flex-wrap: wrap;}
+  .filter-btn {padding: 10px 20px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 25px; color: #fff; cursor: pointer; transition: all 0.3s;}
+  .filter-btn.active, .filter-btn:hover {background: #667eea; border-color: #667eea;}
+  
+  .grid {display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px;}
+  
+  .card {background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 15px; padding: 25px; transition: transform 0.3s, border-color 0.3s;}
+  .card:hover {transform: translateY(-5px); border-color: #667eea;}
+  .card h3 {color: #667eea; margin-bottom: 10px; font-size: 1.3em;}
+  .card .country {display: inline-block; background: rgba(102,126,234,0.2); padding: 4px 12px; border-radius: 15px; font-size: 0.85em; margin-bottom: 12px;}
+  .card .deadline {color: #ff9a9e; font-weight: 600; margin-bottom: 8px;}
+  .card .desc {opacity: 0.85; font-size: 0.95em; margin-bottom: 15px;}
+  .card .requirements {font-size: 0.9em; opacity: 0.7; margin-bottom: 15px;}
+  
+  .btn-group {display: flex; gap: 10px; flex-wrap: wrap;}
+  .btn {flex: 1; min-width: 120px; padding: 12px; text-align: center; background: linear-gradient(90deg, #667eea, #764ba2); color: #fff; text-decoration: none; border-radius: 8px; font-weight: 600; transition: opacity 0.3s;}
+  .btn:hover {opacity: 0.85;}
+  .btn.secondary {background: rgba(255,255,255,0.1);}
+  
+  .no-results {text-align: center; padding: 60px 20px; opacity: 0.6;}
+  .stats {text-align: center; margin-bottom: 20px; opacity: 0.7;}
+  
+  h2 {font-size: 2.5em; margin-bottom: 20px; color: #667eea; text-align: center;}
+  .section-desc {text-align: center; opacity: 0.8; margin-bottom: 30px; max-width: 700px; margin-left: auto; margin-right: auto;}
+  
+  footer {text-align: center; padding: 40px 20px; border-top: 1px solid rgba(255,255,255,0.1); opacity: 0.6; margin-top: 60px;}
+  
   @media (max-width: 768px) {
-    header {padding: 15px 20px;}
-    nav ul {gap: 20px; font-size: 0.95em;}
-   .hero h1 {font-size: 2.5em;}
-  }
-</style>
-</head>
-<body>
-
-<header>
-  <nav>
-    <div class="logo">Whirl Music</div>
-    <ul>
-      <li><a href="#home">Home</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#features">Features</a></li>
-      <li><a href="#upload">Upload</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-  </nav>
-</header>
-
-<section class="hero" id="home">
-  <h1>Whirl Music</h1>
-  <p>Your music, your vibe, your world. Upload, listen, share.</p>
-  <a href="#upload" class="btn">Try It Now</a>
-</section>
-
-<section id="about">
-  <h2>About Whirl Music</h2>
-  <p>Whirl Music is a platform designed around artists and fans. Test your tracks instantly with the upload player below.</p>
-</section>
-
-<section id="features">
-  <h2>What You Can Do</h2>
-  <div class="features">
-    <div class="card">
-      <h3>Upload & Play</h3>
-      <p>Test MP3 files directly in the browser. No signup needed.</p>
-    </div>
-    <div class="card">
-      <h3>High Quality Audio</h3>
-      <p>Lossless playback support for your tracks.</p>
-    </div>
-    <div class="card">
-      <h3>Fast & Light</h3>
-      <p>Runs entirely client-side. No backend needed.</p>
-    </div>
-  </div>
-</section>
-
-<section id="upload">
-  <h2>Upload Your Music</h2>
-  <p>Pick an MP3 from your device and play it instantly. Files never leave your browser.</p>
-  <div class="upload-box">
-    <label for="audioUpload" class="upload-label">Choose MP3 File</label>
-    <input type="file" id="audioUpload" accept=".mp3,audio/*">
-    <audio id="audioPlayer" controls></audio>
-  </div>
-</section>
-
-<section id="contact">
-  <h2>Get in Touch</h2>
-  <p>Have questions or want to collaborate?</p>
-  <div style="text-align: center; margin-top: 30px;">
-    <a href="mailto:contact@whirlmusic.com" class="btn">Email Us</a>
-  </div>
-</section>
-
-<footer>
-  © 2026 Whirl Music. All rights reserved.
-</footer>
-
-<script>
-  const audioUpload = document.getElementById('audioUpload');
-  const audioPlayer = document.getElementById('audioPlayer');
-
-  audioUpload.addEventListener('change', function(e) {
-    const file = e.target.files[0];
-    if (file) {
-      const objectURL = URL.createObjectURL(file);
-      audioPlayer.src = objectURL;
-      audioPlayer.style.display = 'block';
-      audioPlayer.play();
-    }
-  });
-</script>
-
-</body>
-   </html>
+    .header-content {flex-direction: column;}
+    h2 {font-size: 1
