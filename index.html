@@ -5,231 +5,128 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Whirl Music</title>
 <style>
-    * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
+    * {margin: 0; padding: 0; box-sizing: border-box;}
+  html {scroll-behavior: smooth;}
+  body {font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #0f0f1a; color: #fff; line-height: 1.6;}
 
-  html, body {
-    height: 100%;
-    overflow: hidden;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background: #000;
-    color: #fff;
-  }
+  header {position: sticky; top: 0; background: rgba(15, 15, 26, 0.95); backdrop-filter: blur(10px); padding: 20px 50px; border-bottom: 1px solid rgba(255,255,255,0.1); z-index: 100;}
+  nav {display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto;}
+ .logo {font-size: 1.8em; font-weight: bold; background: linear-gradient(90deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;}
+  nav ul {display: flex; list-style: none; gap: 35px;}
+  nav a {color: #fff; text-decoration: none; font-weight: 500; transition: color 0.3s;}
+  nav a:hover {color: #667eea;}
 
-  /* Main scroll container */
-  .feed {
-    height: 100vh;
-    overflow-y: scroll;
-    scroll-snap-type: y mandatory;
-    scroll-behavior: smooth;
-  }
+ .hero {min-height: 80vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 80px 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);}
+ .hero h1 {font-size: 4em; margin-bottom: 20px; background: linear-gradient(90deg, #ff9a9e, #fad0c4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;}
+ .hero p {font-size: 1.3em; max-width: 700px; opacity: 0.95; margin-bottom: 35px;}
+ .btn {display: inline-block; padding: 15px 45px; background: #fff; color: #667eea; text-decoration: none; border-radius: 50px; font-weight: bold; transition: transform 0.3s, box-shadow 0.3s; border: none; cursor: pointer;}
+ .btn:hover {transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,0.3);}
 
-  .feed::-webkit-scrollbar {
-    display: none;
-  }
+  section {padding: 80px 20px; max-width: 1200px; margin: 0 auto;}
+  section h2 {font-size: 2.5em; margin-bottom: 20px; color: #667eea; text-align: center;}
+  section p {font-size: 1.1em; opacity: 0.9; max-width: 800px; margin: 0 auto 20px; text-align: center;}
 
-  /* Each video/post takes full screen */
-  .post {
-    height: 100vh;
-    width: 100vw;
-    scroll-snap-align: start;
-    position: relative;
-    display: flex;
-    align-items: flex-end;
-    justify-content: flex-start;
-    background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.8) 100%);
-  }
+ .features {display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-top: 50px;}
+ .card {background: rgba(255, 255, 255, 0.05); padding: 35px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.1); transition: transform 0.3s, background 0.3s;}
+ .card:hover {transform: translateY(-5px); background: rgba(255, 255, 255, 0.08);}
+ .card h3 {color: #ff9a9e; margin-bottom: 15px; font-size: 1.4em;}
 
-  .post video, .post img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    z-index: -1;
-  }
+  /* Upload section */
+ .upload-box {background: rgba(255, 255, 255, 0.05); padding: 40px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.1); text-align: center; max-width: 600px; margin: 40px auto;}
+  input[type="file"] {display: none;}
+ .upload-label {display: inline-block; padding: 15px 45px; background: linear-gradient(90deg, #667eea, #764ba2); color: #fff; border-radius: 50px; font-weight: bold; cursor: pointer; transition: transform 0.3s;}
+ .upload-label:hover {transform: translateY(-3px);}
+  audio {width: 100%; margin-top: 25px; display: none;}
 
-  .post-content {
-    padding: 80px 20px 120px;
-    width: 100%;
-    z-index: 2;
-  }
+  footer {text-align: center; padding: 40px 20px; border-top: 1px solid rgba(255,255,255,0.1); opacity: 0.7; margin-top: 60px;}
 
-  .post-title {
-    font-size: 1.2em;
-    font-weight: 600;
-    margin-bottom: 8px;
-  }
-
-  .post-desc {
-    font-size: 0.95em;
-    opacity: 0.9;
-    margin-bottom: 15px;
-    max-width: 70%;
-  }
-
-  /* Right side actions like TikTok */
-  .actions {
-    position: absolute;
-    right: 15px;
-    bottom: 120px;
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
-    align-items: center;
-  }
-
-  .action-btn {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
-    cursor: pointer;
-  }
-
-  .action-icon {
-    width: 45px;
-    height: 45px;
-    background: rgba(255,255,255,0.2);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5em;
-    backdrop-filter: blur(10px);
-  }
-
-  .action-count {
-    font-size: 0.8em;
-    font-weight: 600;
-  }
-
-  /* Top nav */
-  .top-nav {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    padding: 15px 20px;
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-    z-index: 100;
-    background: linear-gradient(180deg, rgba(0,0,0,0.6) 0%, transparent 100%);
-  }
-
-  .top-nav a {
-    color: rgba(255,255,255,0.6);
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 1em;
-  }
-
-  .top-nav a.active {
-    color: #fff;
-  }
-
-  /* Bottom nav */
-  .bottom-nav {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    background: #000;
-    display: flex;
-    justify-content: space-around;
-    padding: 10px 0 25px;
-    border-top: 1px solid rgba(255,255,255,0.1);
-    z-index: 100;
-  }
-
-  .bottom-nav a {
-    color: #fff;
-    text-decoration: none;
-    font-size: 0.8em;
-    text-align: center;
-  }
-
-  .bottom-nav-icon {
-    font-size: 1.8em;
-    margin-bottom: 2px;
-  }
-
-  /* Logo */
-  .logo {
-    position: fixed;
-    top: 60px;
-    left: 20px;
-    font-size: 1.5em;
-    font-weight: bold;
-    background: linear-gradient(90deg, #667eea, #764ba2);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    z-index: 100;
+  @media (max-width: 768px) {
+    header {padding: 15px 20px;}
+    nav ul {gap: 20px; font-size: 0.95em;}
+   .hero h1 {font-size: 2.5em;}
   }
 </style>
 </head>
 <body>
 
-<div class="logo">Whirl</div>
+<header>
+  <nav>
+    <div class="logo">Whirl Music</div>
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#upload">Upload</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
 
-<div class="top-nav">
-  <a href="#" class="active">For You</a>
-  <a href="#">Following</a>
-</div>
+<section class="hero" id="home">
+  <h1>Whirl Music</h1>
+  <p>Your music, your vibe, your world. Upload, listen, share.</p>
+  <a href="#upload" class="btn">Try It Now</a>
+</section>
 
-<div class="feed">
-  
-  <!-- Post 1 -->
-  <div class="post">
-    <img src="https://picsum.photos/1080/1920?random=1" alt="Post 1">
-    <div class="post-content">
-      <div class="post-title">@whirlmusic</div>
-      <div class="post-desc">Welcome to Whirl Music 🔥 Music reimagined for creators and fans</div>
-    </div>
-    <div class="actions">
-      <div class="action-btn">
-        <div class="action-icon">❤️</div>
-        <div class="action-count">2.3K</div>
-      </div>
-      <div class="action-btn">
-        <div class="action-icon">💬</div>
-        <div class="action-count">142</div>
-      </div>
-      <div class="action-btn">
-        <div class="action-icon">↗️</div>
-        <div class="action-count">Share</div>
-      </div>
-    </div>
-  </div>
+<section id="about">
+  <h2>About Whirl Music</h2>
+  <p>Whirl Music is a platform designed around artists and fans. Test your tracks instantly with the upload player below.</p>
+</section>
 
-  <!-- Post 2 -->
-  <div class="post">
-    <img src="https://picsum.photos/1080/1920?random=2" alt="Post 2">
-    <div class="post-content">
-      <div class="post-title">@artist1</div>
-      <div class="post-desc">New track dropping soon on Whirl. Stay tuned 🎵</div>
+<section id="features">
+  <h2>What You Can Do</h2>
+  <div class="features">
+    <div class="card">
+      <h3>Upload & Play</h3>
+      <p>Test MP3 files directly in the browser. No signup needed.</p>
     </div>
-    <div class="actions">
-      <div class="action-btn">
-        <div class="action-icon">❤️</div>
-        <div class="action-count">5.1K</div>
-      </div>
-      <div class="action-btn">
-        <div class="action-icon">💬</div>
-        <div class="action-count">89</div>
-      </div>
-      <div class="action-btn">
-        <div class="action-icon">↗️</div>
-        <div class="action-count">Share</div>
-      </div>
+    <div class="card">
+      <h3>High Quality Audio</h3>
+      <p>Lossless playback support for your tracks.</p>
+    </div>
+    <div class="card">
+      <h3>Fast & Light</h3>
+      <p>Runs entirely client-side. No backend needed.</p>
     </div>
   </div>
+</section>
 
-  <!-- Post 3 -->
-  <div class="post">
-    <img src="https://picsum.photos/1080/1920?random=3" alt="Post 3">
-    <div class="post-content
+<section id="upload">
+  <h2>Upload Your Music</h2>
+  <p>Pick an MP3 from your device and play it instantly. Files never leave your browser.</p>
+  <div class="upload-box">
+    <label for="audioUpload" class="upload-label">Choose MP3 File</label>
+    <input type="file" id="audioUpload" accept=".mp3,audio/*">
+    <audio id="audioPlayer" controls></audio>
+  </div>
+</section>
+
+<section id="contact">
+  <h2>Get in Touch</h2>
+  <p>Have questions or want to collaborate?</p>
+  <div style="text-align: center; margin-top: 30px;">
+    <a href="mailto:contact@whirlmusic.com" class="btn">Email Us</a>
+  </div>
+</section>
+
+<footer>
+  © 2026 Whirl Music. All rights reserved.
+</footer>
+
+<script>
+  const audioUpload = document.getElementById('audioUpload');
+  const audioPlayer = document.getElementById('audioPlayer');
+
+  audioUpload.addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (file) {
+      const objectURL = URL.createObjectURL(file);
+      audioPlayer.src = objectURL;
+      audioPlayer.style.display = 'block';
+      audioPlayer.play();
+    }
+  });
+</script>
+
+</body>
+   </html>
