@@ -3,308 +3,45 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Whirl Hub</title>
+<title>Whirl Hub v2</title>
 <style>
     * {margin: 0; padding: 0; box-sizing: border-box;}
   body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #0f0f1a;
-    color: #fff;
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    background: #0d0d18;
+    color: #f5f5f5;
     line-height: 1.6;
   }
 
   header {
-    background: #161628;
-    padding: 20px;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
+    background: #18182b;
+    padding: 18px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
     position: sticky;
     top: 0;
-    z-index: 100;
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(12px);
   }
-.header-content {
+.header-wrap {
     max-width: 1200px;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-wrap: wrap;
     gap: 15px;
+    flex-wrap: wrap;
   }
-.logo {
-    font-size: 1.8em;
-    font-weight: bold;
-    background: linear-gradient(90deg, #667eea, #764ba2);
+.brand {
+    font-size: 1.9em;
+    font-weight: 700;
+    background: linear-gradient(90deg, #7b8cff, #9d7bff);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    background-clip: text;
   }
 
   nav {
     display: flex;
-    gap: 10px;
+    gap: 12px;
   }
-.tab-btn {
-    padding: 10px 25px;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 25px;
-    color: #fff;
-    cursor: pointer;
-    font-size: 1em;
-    transition: all 0.3s;
-    border: none;
-  }
-.tab-btn:hover,.tab-btn.active {
-    background: #667eea;
-    transform: translateY(-2px);
-  }
-
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 40px 20px;
-  }
-.tab-content {
-    display: none;
-    animation: fadeIn 0.4s;
-  }
-.tab-content.active {
-    display: block;
-  }
-  @keyframes fadeIn {
-    from {opacity: 0; transform: translateY(10px);}
-    to {opacity: 1; transform: translateY(0);}
-  }
-
-  /* Music Tab */
-.upload-box {
-    background: rgba(255,255,255,0.05);
-    padding: 50px 40px;
-    border-radius: 20px;
-    border: 1px solid rgba(255,255,255,0.1);
-    text-align: center;
-    max-width: 650px;
-    margin: 40px auto;
-  }
-  input[type="file"] {display: none;}
-.upload-label {
-    display: inline-block;
-    padding: 15px 45px;
-    background: linear-gradient(90deg, #667eea, #764ba2);
-    color: #fff;
-    border-radius: 50px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: transform 0.3s, box-shadow 0.3s;
-  }
-.upload-label:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 30px rgba(102,126,234,0.4);
-  }
-  audio {
-    width: 100%;
-    margin-top: 30px;
-    border-radius: 10px;
-  }
-  #fileName {
-    margin-top: 15px;
-    opacity: 0.7;
-  }
-
-  /* Sponsors Tab */
-  #searchInput {
-    width: 100%;
-    padding: 15px 20px;
-    font-size: 1.1em;
-    border-radius: 12px;
-    border: 1px solid rgba(255,255,255,0.2);
-    background: rgba(255,255,255,0.05);
-    color: #fff;
-    margin-bottom: 30px;
-    outline: none;
-  }
-  #searchInput:focus {
-    border-color: #667eea;
-  }
-.filters {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 30px;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-.filter-btn {
-    padding: 10px 20px;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 25px;
-    color: #fff;
-    cursor: pointer;
-    transition: all 0.3s;
-    border: none;
-  }
-.filter-btn:hover,.filter-btn.active {
-    background: #667eea;
-  }
-
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 20px;
-  }
-.card {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 15px;
-    padding: 25px;
-    transition: transform 0.3s, box-shadow 0.3s;
-  }
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(102,126,234,0.2);
-  }
-.card h3 {
-    color: #667eea;
-    margin-bottom: 10px;
-  }
-.card.tag {
-    background: rgba(102,126,234,0.2);
-    padding: 4px 12px;
-    border-radius: 15px;
-    font-size: 0.85em;
-    display: inline-block;
-    margin: 0 5px 12px 0;
-  }
-.card.deal {
-    color: #9affa0;
-    font-weight: 600;
-    margin-bottom: 8px;
-  }
-.btn {
-    display: inline-block;
-    padding: 12px 20px;
-    background: linear-gradient(90deg, #667eea, #764ba2);
-    color: #fff;
-    text-decoration: none;
-    border-radius: 8px;
-    font-weight: 600;
-    margin-top: 15px;
-    transition: transform 0.3s;
-  }
-.btn:hover {
-    transform: translateX(5px);
-  }
-
-  h2 {
-    font-size: 2.5em;
-    margin-bottom: 20px;
-    color: #667eea;
-    text-align: center;
-  }
-.section-desc {
-    text-align: center;
-    opacity: 0.8;
-    margin-bottom: 30px;
-    font-size: 1.1em;
-  }
-  footer {
-    text-align: center;
-    padding: 40px 20px;
-    border-top: 1px solid rgba(255,255,255,0.1);
-    opacity: 0.6;
-    margin-top: 60px;
-  }
-
-  @media (max-width: 768px) {
- .header-content {flex-direction: column;}
-    h2 {font-size: 2em;}
-.grid {grid-template-columns: 1fr;}
-  }
-</style>
-</head>
-<body>
-
-<header>
-  <div class="header-content">
-    <div class="logo">Whirl Hub</div>
-    <nav>
-      <button class="tab-btn active" onclick="switchTab('music', event)">Music Player</button>
-      <button class="tab-btn" onclick="switchTab('sponsors', event)">Talent Sponsors</button>
-    </nav>
-  </div>
-</header>
-
-<div class="container">
-
-  <!-- Music Tab -->
-  <div id="music" class="tab-content active">
-    <h2>Music Player</h2>
-    <p class="section-desc">Upload an MP3 and play it instantly. Files never leave your browser.</p>
-    <div class="upload-box">
-      <label for="audioUpload" class="upload-label">Choose MP3 File</label>
-      <input type="file" id="audioUpload" accept=".mp3,audio/*">
-      <div id="fileName"></div>
-      <audio id="audioPlayer" controls></audio>
-    </div>
-  </div>
-
-  <!-- Talent Sponsors Tab -->
-  <div id="sponsors" class="tab-content">
-    <h2>Talent Sponsors Helper</h2>
-    <p class="section-desc">Find brands and agencies that sponsor creators, musicians, and artists.</p>
-
-    <input type="text" id="searchInput" placeholder="Search sponsor name, niche, or deal type...">
-
-    <div class="filters">
-      <button class="filter-btn active" data-filter="all">All</button>
-      <button class="filter-btn" data-filter="Music">Music</button>
-      <button class="filter-btn" data-filter="Gaming">Gaming</button>
-      <button class="filter-btn" data-filter="Fashion">Fashion</button>
-      <button class="filter-btn" data-filter="Tech">Tech</button>
-      <button class="filter-btn" data-filter="Sports">Sports</button>
-    </div>
-
-    <div class="grid" id="results"></div>
-  </div>
-
-</div>
-
-<footer>
-  © 2026 Whirl Hub | Connect talent with sponsors
-</footer>
-
-<script>
-// Tab switching
-function switchTab(tabName, event) {
-  document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-  document.getElementById(tabName).classList.add('active');
-  event.currentTarget.classList.add('active');
-}
-
-// Music player
-document.getElementById('audioUpload').addEventListener('change', function(e) {
-  const file = e.target.files[0];
-  if (file) {
-    const url = URL.createObjectURL(file);
-    const player = document.getElementById('audioPlayer');
-    document.getElementById('fileName').textContent = 'Now playing: ' + file.name;
-    player.src = url;
-  }
-});
-
-// Talent Sponsor Data - edit this to add your own sponsors
-const sponsors = [
-  {name: "Red Bull", niche: "Music", deal: "Event & Artist Sponsorship", desc: "Sponsors DJs, producers, and live music events worldwide.", link: "https://www.redbull.com/"},
-  {name: "Nike", niche: "Sports", deal: "Athlete & Creator Deals", desc: "Partners with influencers and athletes for campaigns.", link: "https://www.nike.com/"},
-  {name: "ASUS ROG", niche: "Gaming", deal: "Streamer & Esports Sponsorship", desc: "Supports gaming creators and tournaments.", link: "https://rog.asus.com/"},
-  {name: "Adobe", niche: "Tech", deal: "Creative Creator Fund", desc: "Funds designers, video editors, and digital artists.", link: "https://www.adobe.com/"},
-  {name: "Spotify", niche: "Music", deal: "Playlist & Artist Partnership", desc: "Works with independent artists for promotion.", link: "https://artists.spotify.com/"},
-  {name: "Logitech G", niche: "Gaming", deal: "Gear & Content Creator Program", desc: "Provides gear and sponsorships for streamers.", link: "https://www.logitechg.com/"},
-  {name: "Gymshark", niche: "Fashion", deal: "Athlete & Fitness Creator Program", desc: "Sponsors fitness influencers and athletes.", link: "https://www.gymshark.com/"}
-];
-
-let currentFilter = 'all';
-
-function renderResults(data) {
+.tab {
+    padding: 9px 22px;
+    background: rgba(255,255,255
